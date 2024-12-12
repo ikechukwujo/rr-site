@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <section id="cars" class="cars-section">
+        <h3>Our Car fleet</h3>
+        <div>  
+            <label for="category-filter">Filter by Category:</label>
+            <select id="category-filter" >
+                <option value="all">All</option>
+                <option value="sedan">Sedan</option>
+                <option value="suv">SUV</option>
+                <option value="sport">Sport</option>
+            </select>
+        </div>
+        <div id="carList">
+            <% cars.forEach( car => { %>
+                <div class="car" data-category="<%= car.category %>">
+                    <img src="<%= car.image %>" alt="">
+                    <h3><%= car.title %></h3>
+                    <p><%= car.price %></p>
+                    <a href="#book" class="cta-button">Book Now</a>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+    <%- include('./partials/footer.ejs') %>
+    <script> 
+        document.getElementById('category-filter').addEventListener('change', function (){
+            const selectedCategory = this.value;
+            const cars = document.querySelectorAll('.car');
+            cars.forEach( car =>{
+                if(selectedCategory === 'all' || car.dataset.category === selectedCategory){
+                    car.style.display = '';
+                }else{
+                    car.style.display = 'none';
+                }
+            })
+        })
+    </script>
+</body>
+</html>
